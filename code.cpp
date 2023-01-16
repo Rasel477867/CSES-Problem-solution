@@ -8,37 +8,40 @@ using namespace std;
 #define ll long long int
 #define pb push_back
 vector<ll>v;
-multiset<ll>s;
-multiset<ll>:: iterator it;
+stack<pair<ll,ll> >s;
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    ll m,n,i,a;
-    cin>>n>>m;
+    ll i,n,c,a;
+    cin>>n;
     for(i=0; i<n; i++)
     {
         cin>>a;
-        s.insert(a);
-
+        v.pb(a);
     }
-    for(i=0; i<m; i++)
+    for(i=0; i<n; i++)
     {
-        cin>>a;
-        it=s.upper_bound(a);
-        if(it==s.begin())
+        while(!s.empty())
         {
-            cout<<-1<<endl;
-            continue;
+            if(s.top().first<v[i])
+                break;
+            else
+                s.pop();
         }
+        if(s.empty())
+        {
+             cout<<0<<" ";
+             s.push({v[i],i+1});
 
+        }
         else{
-             --it;
-
-            cout<<*it<<endl;
-            s.erase(it);
+            cout<<s.top().second<<" ";
+            s.push({v[i],i+1});
         }
+
+
     }
     return 0;
 }
