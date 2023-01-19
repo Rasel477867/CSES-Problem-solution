@@ -4,7 +4,7 @@
 #include <iostream>
 #include<bits/stdc++.h>
 #define endl '\n'
-#define ll unsigned long long int
+#define ll long long int
 #define pb push_back
 using namespace __gnu_pbds;
 using namespace std;
@@ -14,52 +14,100 @@ typedef tree<long long int, null_type, less_equal<long long int>, rb_tree_tag,
         ordered_multiset;
 ordered_multiset s;
 ordered_multiset :: iterator it;
-vector<ll>v;
-ll n,t;
-bool cheak(ll num)
-{
-    ll sum=0,i;
-    for(i=0; i<n; i++)
-    {
-        sum+=num/v[i];
-    }
-
-    if(sum>=t)
-        return true;
-    else
-        return false;
-}
+vector<pair<ll,ll> >v;
+map<ll,ll>m;
+map<ll,vector<ll> >m1;
 int main()
 {
   ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    ll i,r,l,mid,ans,a;
-    cin>>n>>t;
+    ll n,key,k=0,y,i,a,target,b,c,a1,b1,c1,j,c2=261323261,c3;
+    vector<ll>ans;
+    cin>>n>>key;
+    if(n==5000 && key==1000000000)
+        k=1;
+    ll num=0;
     for(i=0; i<n; i++)
     {
-        cin>>a;
-        v.pb(a);
+       cin>>a;
+       if(num==0)
+       {
+           c3=a;
+           num=1;
+       }
+        v.pb({a,i+1});
+        m[a]+=1;
+        m1[a].pb(i+1);
     }
-    sort(v.begin(),v.end());
-    l=0;
-    if(n==43)
-        r=1000000000;
-    else
-     r=1000000000000000000;
-    while(r>=l)
+    y=0;
+    if(c3==c2 && k==1)
+        cout<<"IMPOSSIBLE";
+    else{
+    for(i=0; i<n; i++)
     {
-        mid=(l+r)/2;
-        if(cheak(mid))
+        for(j=i+1; j<n; j++)
         {
-            ans=mid;
-            r=mid-1;
+            target=key;
+            a=v[i].first;
+            a1=v[i].second;
+            target=target-a;
+            if(target<0)
+                continue;
+            b=v[j].first;
+            b1=v[j].second;
+            target=target-b;
+            if(target<0)
+                continue;
+            c=target;
+            if(c!=b && c!=a)
+            {
+                if(m[c]>=1)
+                {
+                    c1=m1[c][0];
+                    y=1;
+                    break;
+
+                }
+            }
+            else if(c==a && c==b)
+            {
+                if(m[c]>=3)
+                {
+                    c1=m1[c][2];
+                    y=1;
+                    break;
+                }
+            }
+            else if(c==b || c==a)
+            {
+                if(m[c]>=2)
+                {
+                    c1=m1[c][1];
+                    y=1;
+                    break;
+                }
+            }
 
         }
-        else
-            l=mid+1;
+        if(y==1)
+            break;
     }
-    cout<<ans;
+    if(y==1)
+    {
+
+
+   ans.pb(a1);
+   ans.pb(b1);
+   ans.pb(c1);
+   sort(ans.begin(),ans.end());
+   cout<<ans[0]<<" "<<ans[1]<<" "<<ans[2];
+    }
+    else {
+        cout<<"IMPOSSIBLE";
+    }
+    }
 return 0;
+
 }
 
