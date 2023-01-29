@@ -34,24 +34,20 @@ int main()
     ll sum=0;
     ans=0;
     cin>>n>>k;
-    m[0]++;
-    for(i=0; i<n;i++)
+    m[0]=1;
+    for(i=0; i<n; i++)
     {
         cin>>a;
         sum+=a;
-        if(sum<k)
-            {
-                m[sum]++;
-                continue;
-            }
         b=sum-k;
         if(m[b]>0)
         {
             ans+=m[b];
             m[sum]++;
         }
-        else
-            m[sum]+=1;
+        else{
+            m[sum]++;
+        }
     }
     cout<<ans;
   return 0;
