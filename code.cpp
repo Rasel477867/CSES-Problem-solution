@@ -13,8 +13,9 @@ typedef tree<long long int, null_type, less_equal<long long int>, rb_tree_tag,
         tree_order_statistics_node_update>
         ordered_multiset;
 ordered_multiset s;
-ordered_multiset :: iterator it;
+//ordered_multiset :: iterator it;
 map<ll,ll>m;
+map<ll,ll>:: iterator it;
 
 bool cheak(ll n,ll a)
 {
@@ -33,21 +34,27 @@ int main()
     ll n,k,ans,a,b,i;
     ll sum=0;
     ans=0;
-    cin>>n>>k;
+
+    cin>>n;
     m[0]=1;
     for(i=0; i<n; i++)
     {
         cin>>a;
         sum+=a;
-        b=sum-k;
-        if(m[b]>0)
+        b=sum%n;
+        if(b<0)
         {
-            ans+=m[b];
-            m[sum]++;
+            b+=n;
         }
-        else{
-            m[sum]++;
-        }
+        m[b]++;
+    }
+    for(it=m.begin(); it!=m.end(); it++)
+    {
+        if(it->second==0)
+            continue;
+       b=it->second;
+       b--;
+       ans+=(b*(b+1))/2;
     }
     cout<<ans;
   return 0;
