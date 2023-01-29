@@ -14,100 +14,45 @@ typedef tree<long long int, null_type, less_equal<long long int>, rb_tree_tag,
         ordered_multiset;
 ordered_multiset s;
 ordered_multiset :: iterator it;
-vector<pair<ll,ll> >v;
 map<ll,ll>m;
-map<ll,vector<ll> >m1;
-int main()
+
+bool cheak(ll n,ll a)
 {
-  ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    ll n,key,k=0,y,i,a,target,b,c,a1,b1,c1,j,c2=261323261,c3;
-    vector<ll>ans;
-    cin>>n>>key;
-    if(n==5000 && key==1000000000)
-        k=1;
-    ll num=0;
-    for(i=0; i<n; i++)
-    {
-       cin>>a;
-       if(num==0)
-       {
-           c3=a;
-           num=1;
-       }
-        v.pb({a,i+1});
-        m[a]+=1;
-        m1[a].pb(i+1);
-    }
-    y=0;
-    if(c3==c2 && k==1)
-        cout<<"IMPOSSIBLE";
-    else{
-    for(i=0; i<n; i++)
-    {
-        for(j=i+1; j<n; j++)
-        {
-            target=key;
-            a=v[i].first;
-            a1=v[i].second;
-            target=target-a;
-            if(target<0)
-                continue;
-            b=v[j].first;
-            b1=v[j].second;
-            target=target-b;
-            if(target<0)
-                continue;
-            c=target;
-            if(c!=b && c!=a)
-            {
-                if(m[c]>=1)
-                {
-                    c1=m1[c][0];
-                    y=1;
-                    break;
-
-                }
-            }
-            else if(c==a && c==b)
-            {
-                if(m[c]>=3)
-                {
-                    c1=m1[c][2];
-                    y=1;
-                    break;
-                }
-            }
-            else if(c==b || c==a)
-            {
-                if(m[c]>=2)
-                {
-                    c1=m1[c][1];
-                    y=1;
-                    break;
-                }
-            }
-
-        }
-        if(y==1)
-            break;
-    }
-    if(y==1)
-    {
-
-
-   ans.pb(a1);
-   ans.pb(b1);
-   ans.pb(c1);
-   sort(ans.begin(),ans.end());
-   cout<<ans[0]<<" "<<ans[1]<<" "<<ans[2];
-    }
-    else {
-        cout<<"IMPOSSIBLE";
-    }
-    }
-return 0;
-
+    return(n&(1<<a));
+}
+ll bset(ll n,ll i)
+{
+    return(n|(1<<i));
 }
 
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    ll n,k,ans,a,b,i;
+    ll sum=0;
+    ans=0;
+    cin>>n>>k;
+    m[0]++;
+    for(i=0; i<n;i++)
+    {
+        cin>>a;
+        sum+=a;
+        if(sum<k)
+            {
+                m[sum]++;
+                continue;
+            }
+        b=sum-k;
+        if(m[b]>0)
+        {
+            ans+=m[b];
+            m[sum]++;
+        }
+        else
+            m[sum]+=1;
+    }
+    cout<<ans;
+  return 0;
+}
