@@ -1,3 +1,4 @@
+
 #include <ext/pb_ds/assoc_container.hpp> // Common file
 #include <ext/pb_ds/tree_policy.hpp>
 #include <functional> // for less
@@ -17,19 +18,20 @@ typedef tree<long long int, null_type, less_equal<long long int>, rb_tree_tag,
 ordered_multiset s;
 //ordered_multiset :: iterator it;
 
-const ll N=1e6;
+const ll N=1e3;
  bool sive[N];
  vector<ll>prime;
  map<ll,ll >m;
  map<ll,ll >:: iterator it;
- ll ex(ll a,ll b)
+ const ll mod=1e9+7;
+ ll ex(ll a,ll b,ll mod)
 {
     if(b==0)
         return 1;
     else if(b%2==0)
-        return (ex((a*a),b/2));
+        return (ex((a*a)%mod,b/2,mod));
     else
-        return (a*ex((a*a),(b-1)/2));
+        return (a*ex((a*a)%mod,(b-1)/2,mod))%mod;
 }
  void segsive(ll l,ll r)
  {    ll base,i,j;
@@ -86,36 +88,12 @@ int main()
        if(sive[i]==true)
            prime.pb(i);
     }
-    ll n,a,b,t;
+    ll n,t,a,b,ans=0;
     cin>>t;
     while(t--)
     {
-
-    m.clear();
-    cin>>n;
-    ll num=n;
-    ll num1=n;
-    for(i=0; prime[i]*prime[i]<=num ; i++)
-    {
-        while(1)
-        {
-            if(n%prime[i]!=0)
-                break;
-            else{
-                n/=prime[i];
-                m[prime[i]]++;
-            }
-        }
-    }
-    if(n>1)
-        m[n]++;
-     num=1;
-
-     for(it=m.begin(); it!=m.end(); it++)
-     {
-         num=num*((it->second)+1);
-     }
-     cout<<num<<endl;
+        cin>>a>>b;
+        cout<<ex(a,b,mod)<<endl;
     }
    return 0;
 }
