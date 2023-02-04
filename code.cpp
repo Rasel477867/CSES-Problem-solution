@@ -18,7 +18,7 @@ typedef tree<long long int, null_type, less_equal<long long int>, rb_tree_tag,
 ordered_multiset s;
 //ordered_multiset :: iterator it;
 
-const ll N=1e3;
+const ll N=1e7;
  bool sive[N];
  vector<ll>prime;
  map<ll,ll >m;
@@ -60,6 +60,37 @@ const ll N=1e3;
        }
        cout<<endl;
  }
+  ll euler_pi_function(ll n)
+ { ll num,num1,num2,i;
+      num=n;
+     num1=n;
+    for(i=0; prime[i]*prime[i]<=num ; i++)
+    {
+        while(1)
+        {
+            if(n%prime[i]!=0)
+                break;
+            else{
+                n/=prime[i];
+                m[prime[i]]++;
+            }
+        }
+    }
+    if(n>1)
+        m[n]++;
+
+
+       num=1;
+      num2=1;
+     for(it=m.begin(); it!=m.end(); it++)
+     {
+         num=num*(it->first);
+         num2=num2*((it->first)-1);
+     }
+     num=num1/num;
+     num=num*num2;
+   return num;
+ }
 
 int main()
 {
@@ -88,12 +119,17 @@ int main()
        if(sive[i]==true)
            prime.pb(i);
     }
-    ll n,t,a,b,ans=0;
+    ll n,t,a,b,ans=0,c,d,q1,q2;
+    q1=mod-1;
+    q2=euler_pi_function(q1);
     cin>>t;
     while(t--)
     {
-        cin>>a>>b;
+        cin>>a>>b>>c;
+        c=c%q2;
+        b=ex(b,c,q1);
         cout<<ex(a,b,mod)<<endl;
     }
+
    return 0;
 }
