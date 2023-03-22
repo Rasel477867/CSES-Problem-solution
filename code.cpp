@@ -14,16 +14,28 @@ using namespace std;
 typedef tree<long long int, null_type, less_equal<long long int>, rb_tree_tag,
         tree_order_statistics_node_update>
         ordered_multiset;
-ordered_multiset s3;
+//ordered_multiset s3;
 //ordered_multiset :: iterator it;
 const ll mod=1e9+7;
-const ll z=1e7+10;
+ll comb[55][55];
+const ll N=1e6+7;
+bool sive[N];
+vector<ll>prime;
+vector<ll>v;
 stack<ll>s;
-const ll N=1e1;
- bool sive[N];
- vector<ll>prime;
- vector<ll>v;
-ll fact[z];
+ll fact[N];
+
+//long long int gcd(long long int a,long long int b)
+//{
+//    long long int c;
+//    while(a%b!=0)
+//    {
+//        c=b;
+//        b=a%b;
+//        a=c;
+//    }
+//    return b;
+//}
 
 ll ex(ll a,ll b,ll mod)
 {
@@ -34,65 +46,6 @@ ll ex(ll a,ll b,ll mod)
     else
         return (a*ex((a*a)%mod,(b-1)/2,mod))%mod;
 }
-// void segsive(ll l,ll r)
-// {    ll base,i,j;
-//     bool sprime[r-l+1];
-//     for(i=0; i<r-l+1; i++)
-//          sprime[i]=true;
-//     for(i=0; prime[i]*prime[i]<=r; i++)
-//     {
-//         ll cp=prime[i];
-//         base=(l/cp)*cp;
-//         if(base<l)
-//            base+=cp;
-//         for(j=base; j<=r; j+=cp)
-//              sprime[j-l]=false;
-//         if(cp==base)
-//            sprime[base-l]=true;
-//     }
-//     for(i=0; i<(r-l+1); i++)
-//       {
-//           if(sprime[i]==true)
-//            {
-//                if(i+l==1)
-//                    continue;
-//                cout<<i+l<<endl;
-//            }
-//       }
-//       cout<<endl;
-// }
-//  ll euler_pi_function(ll n)
-// { ll num,num1,num2,i;
-//      num=n;
-//     num1=n;
-//    for(i=0; prime[i]*prime[i]<=num ; i++)
-//    {
-//        while(1)
-//        {
-//            if(n%prime[i]!=0)
-//                break;
-//            else{
-//                n/=prime[i];
-//                m[prime[i]]++;
-//            }
-//        }
-//    }
-//    if(n>1)
-//        m[n]++;
-//
-//
-//       num=1;
-//      num2=1;
-//     for(it=m.begin(); it!=m.end(); it++)
-//     {
-//         num=num*(it->first);
-//         num2=num2*((it->first)-1);
-//     }
-//     num=num1/num;
-//     num=num*num2;
-//   return num;
-// }
-
 int main()
 {
     ios::sync_with_stdio(0);
@@ -117,24 +70,47 @@ int main()
     }
     for(i=0; i<N; i++)
     {
-       if(sive[i]==true)
-           prime.pb(i);
+        if(sive[i]==true)
+            prime.pb(i);
+    }
+    for(i=0; i<=50; i++)
+    {
+        for(j=0; j<=i; j++)
+        {
+            if(i==j)
+                comb[i][j]=1;
+            else if(j==0)
+                comb[i][j]=1;
+            else
+                comb[i][j]=comb[i-1][j-1]+comb[i-1][j];
+        }
     }
 
-    /*start main funciton*/
-     fact[0]=1;
-     fact[1]=1;
-     for(i=2; i<z; i++)
-     {
-         fact[i]=(fact[i-1]%mod*i)%mod;
-     }
-     ll n,m,a,b,c,ans;
-     cin>>n>>m;
-     a=m+n-1;
-     ans=fact[a];
-     b=(fact[a-m]*fact[m])%mod;
-     c=ex(b,mod-2,mod);
-     ans=((ans%mod)*(c%mod))%mod;
-     cout<<ans;
-return 0;
+ fact[0]=1;
+ fact[1]=1;
+ for(i=1;i<N; i++)
+ {
+     fact[i]=(((fact[i-1])%mod)*(i%mod))%mod;
+ }
+
+    //start main funciton
+ll t,a,b,c,d,ans,n;
+cin>>t;
+while(t--)
+{
+    cin>>a>>b;
+    c=fact[a];
+    d=fact[b];
+    d=(d*fact[a-b])%mod;
+    d=ex(d,mod-2,mod);
+    ans=(d*c)%mod;
+    cout<<ans<<endl;
+}
+
+
+
+
+
+
+    return 0;
 }
