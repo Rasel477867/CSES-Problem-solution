@@ -22,7 +22,8 @@ const ll N=1e6+7;
 bool sive[N];
 vector<ll>prime;
 vector<ll>v;
-stack<ll>s;
+map<char,int>m;
+map<char,int>:: iterator it;
 ll fact[N];
 
 //long long int gcd(long long int a,long long int b)
@@ -95,18 +96,24 @@ int main()
 
     //start main funciton
 ll t,a,b,c,d,ans,n;
-cin>>t;
-while(t--)
-{
-    cin>>a>>b;
-    c=fact[a];
-    d=fact[b];
-    d=(d*fact[a-b])%mod;
-    d=ex(d,mod-2,mod);
-    ans=(d*c)%mod;
-    cout<<ans<<endl;
-}
 
+string s;
+cin>>s;
+n=s.size();
+for(i=0; i<n;i++)
+    m[s[i]]++;
+ans=fact[n];
+ll f=1;
+for(it=m.begin(); it!=m.end();it++)
+{
+    if(it->second>1)
+    {
+        f=(f*fact[it->second])%mod;
+    }
+}
+f=ex(f,mod-2,mod);
+ans=(f*ans)%mod;
+cout<<ans;
 
 
 
