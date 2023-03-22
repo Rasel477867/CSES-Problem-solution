@@ -18,12 +18,10 @@ typedef tree<long long int, null_type, less_equal<long long int>, rb_tree_tag,
 //ordered_multiset :: iterator it;
 const ll mod=1e9+7;
 ll comb[55][55];
-const ll N=1e6+7;
+const ll N=1e7;
 bool sive[N];
 vector<ll>prime;
 vector<ll>v;
-map<char,int>m;
-map<char,int>:: iterator it;
 ll fact[N];
 
 //long long int gcd(long long int a,long long int b)
@@ -53,40 +51,40 @@ int main()
     cin.tie(0);
     cout.tie(0);
     ll i,j;
-    for(i=0; i<N; i++)
-    {
-        sive[i]=true;
-    }
-    sive[0]=false;
-    sive[1]=false;
-    for(i=2; i*i<=N; i++)
-    {
-        if(sive[i])
-        {
-            for(j=i*i; j<N; j+=i)
-            {
-                sive[j]=false;
-            }
-        }
-    }
-    for(i=0; i<N; i++)
-    {
-        if(sive[i]==true)
-            prime.pb(i);
-    }
-    for(i=0; i<=50; i++)
-    {
-        for(j=0; j<=i; j++)
-        {
-            if(i==j)
-                comb[i][j]=1;
-            else if(j==0)
-                comb[i][j]=1;
-            else
-                comb[i][j]=comb[i-1][j-1]+comb[i-1][j];
-        }
-    }
-
+//    for(i=0; i<N; i++)
+//    {
+//        sive[i]=true;
+//    }
+//    sive[0]=false;
+//    sive[1]=false;
+//    for(i=2; i*i<=N; i++)
+//    {
+//        if(sive[i])
+//        {
+//            for(j=i*i; j<N; j+=i)
+//            {
+//                sive[j]=false;
+//            }
+//        }
+//    }
+//    for(i=0; i<N; i++)
+//    {
+//        if(sive[i]==true)
+//            prime.pb(i);
+//    }
+//    for(i=0; i<=50; i++)
+//    {
+//        for(j=0; j<=i; j++)
+//        {
+//            if(i==j)
+//                comb[i][j]=1;
+//            else if(j==0)
+//                comb[i][j]=1;
+//            else
+//                comb[i][j]=comb[i-1][j-1]+comb[i-1][j];
+//        }
+//    }
+//
  fact[0]=1;
  fact[1]=1;
  for(i=1;i<N; i++)
@@ -97,24 +95,21 @@ int main()
     //start main funciton
 ll t,a,b,c,d,ans,n;
 
-string s;
-cin>>s;
-n=s.size();
-for(i=0; i<n;i++)
-    m[s[i]]++;
-ans=fact[n];
-ll f=1;
-for(it=m.begin(); it!=m.end();it++)
+cin>>n;
+if(n%2==0)
 {
-    if(it->second>1)
-    {
-        f=(f*fact[it->second])%mod;
-    }
-}
-f=ex(f,mod-2,mod);
-ans=(f*ans)%mod;
-cout<<ans;
 
+
+n=n/2;
+a=fact[2*n];
+b=(fact[n]*fact[n])%mod;
+b=(b*(n+1))%mod;
+b=ex(b,mod-2,mod);
+ans=(a*b)%mod;
+cout<<ans;
+}
+else
+    cout<<0;
 
 
 
