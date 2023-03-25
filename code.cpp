@@ -93,24 +93,27 @@ int main()
  }
 
     //start main funciton
-ll t,a,b,c,d,ans,n;
-
-cin>>n;
-if(n%2==0)
-{
-
-
-n=n/2;
-a=fact[2*n];
-b=(fact[n]*fact[n])%mod;
-b=(b*(n+1))%mod;
-b=ex(b,mod-2,mod);
-ans=(a*b)%mod;
-cout<<ans;
-}
-else
-    cout<<0;
-
+   ll n,a,b,c,ans=0;
+   cin>>n;
+   a=fact[n];
+   for(i=2; i<=n; i++)
+   {
+       if(i%2==0)
+       {
+           b=fact[i];
+           b=ex(b,mod-2,mod);
+           c=(a*b)%mod;
+           ans=(ans%mod+c%mod)%mod;
+       }
+       else
+       {
+           b=fact[i];
+           b=ex(b,mod-2,mod);
+           c=(a*b)%mod;
+           ans=(ans%mod-c%mod+mod)%mod;
+       }
+   }
+   cout<<ans;
 
 
 
