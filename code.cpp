@@ -8,10 +8,11 @@
 #define ll long long int
 #define pb push_back
 #define pf push_front
-
 const ll mod=1e9+7;
 using namespace std;
-vector<ll>v;
+ll pf[1005][1005];
+ll v[1005][1005];
+
 //ll ex(ll a,ll b,ll mod)
 //{
 //    if(b==0)
@@ -38,23 +39,32 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    ll i,j,t;
-    ll ans,sum,a,b,n;
-    cin>>n>>t;
-    cin>>a;
-    sum=a;
-    v.pb(0);
-    v.pb(a);
-    for(i=1; i<n; i++)
+    ll t,j,i;
+    ll n,m,ans,a,b,c,d;
+    cin>>n>>m;
+    for(i=1; i<=n; i++)
     {
-        cin>>a;
-        sum+=a;
-        v.pb(sum);
+        char ch;
+        for(j=1; j<=n; j++)
+        {
+            cin>>ch;
+            if(ch=='*')
+                v[i][j]=1;
+            else
+                v[i][j]=0;
+        }
     }
-    while(t--)
+    for(i=1; i<=n; i++)
     {
-        cin>>a>>b;
-        ans=v[b]-v[a-1];
+        for(j=1; j<=n; j++)
+        {
+            pf[i][j]=v[i][j]+pf[i-1][j]+pf[i][j-1]-pf[i-1][j-1];
+        }
+    }
+    while(m--)
+    {
+        cin>>a>>b>>c>>d;
+        ans=pf[c][d]-pf[c][b-1]-pf[a-1][d]+pf[a-1][b-1];
         cout<<ans<<endl;
     }
 
